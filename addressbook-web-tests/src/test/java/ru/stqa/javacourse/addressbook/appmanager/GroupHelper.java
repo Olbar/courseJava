@@ -55,4 +55,32 @@ public class GroupHelper extends HelperBase{
     public void initGroupCreation() {
         click(By.name("new"));
     }
+
+    public void selectGroup() {
+        click(By.name("selected[]"));
+    }
+
+    public void deleteSelectedGroup() {
+        click(By.name("delete"));
+    }
+
+    public void editContact() {
+        click(By.cssSelector("img[title='Edit']:first-child"));
+    }
+
+    public void deleteContact() {
+        click(By.cssSelector("input[value='Delete']"));
+    }
+
+    public void initGroupModification() {
+        click(By.name("edit"));
+    }
+
+    public void submitGroupModification() {
+        click(By.cssSelector("input[value='Update']"));
+    }
+
+    public void submitContactModification() {
+        click(By.cssSelector("input[value='Update']"));
+    }
 }
