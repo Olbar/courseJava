@@ -47,4 +47,7 @@ public class ContactHelper extends HelperBase {
     public void submitContactModification() {
         click(By.cssSelector("input[value='Update']"));
     }
+
+    public void returnToHomePage() {click(By.linkText("home page"));
+    }
 }
