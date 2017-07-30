@@ -76,19 +76,13 @@ public class ContactHelper extends HelperBase {
 
     public List<ContactData> getContactList() {
         List<ContactData> contacts = new ArrayList<ContactData>();
-        List<WebElement> elements = wd.findElements(By.cssSelector("tr[name='entry']"));
+        List<WebElement> elements = wd.findElements(By.cssSelector("table[id='maintable']"));
         for (WebElement element : elements) {
-            String id = element.findElement(By.tagName("input")).getAttribute("id");
-            String firstname = element.getText();
-            String lastname = element.getText();
-            String companyAddress = element.getText();
-            String mail1 = element.getText();
-            String mail2 = element.getText();
-            String mail3 = element.getText();
-            String homeNumber = element.getText();
-            String mobileNumber = element.getText();
-            String workNumber = element.getText();
-            ContactData contact = new ContactData(id, firstname, null, lastname, null, null, null, companyAddress, homeNumber, mobileNumber, workNumber, null, mail1, mail2, mail3, null);
+            String id = element.findElement(By.tagName("input")).getAttribute("value");
+            String firstname = element.findElement(By.cssSelector("table[id='maintable'] tr[name='entry'] td:nth-child(3)")).getText();
+            String lastname = element.findElement(By.cssSelector("table[id='maintable'] tr[name='entry'] td:nth-child(2)")).getText();
+            String companyAddress = element.findElement(By.cssSelector("table[id='maintable'] tr[name='entry'] td:nth-child(4)")).getText();
+            ContactData contact = new ContactData(id, firstname, null, lastname, null, null, null, companyAddress, null, null, null, null, null, null, null, null);
             contacts.add(contact);
         }
         return contacts;
