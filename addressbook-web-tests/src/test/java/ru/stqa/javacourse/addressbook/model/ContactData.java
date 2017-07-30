@@ -1,6 +1,7 @@
 package ru.stqa.javacourse.addressbook.model;
 
 public class ContactData {
+    private final String id;
     private final String firstname;
     private final String middlename;
     private final String lastname;
@@ -17,7 +18,26 @@ public class ContactData {
     private final String mail3;
     private final String site;
 
+    public ContactData(String id, String firstname, String middlename, String lastname, String nickname, String title, String companyName, String companyAddress, String homeNumber, String mobileNumber, String workNumber, String fax, String mail1, String mail2, String mail3, String site) {
+        this.id = id;
+        this.firstname = firstname;
+        this.middlename = middlename;
+        this.lastname = lastname;
+        this.nickname = nickname;
+        this.title = title;
+        this.companyName = companyName;
+        this.companyAddress = companyAddress;
+        this.homeNumber = homeNumber;
+        this.mobileNumber = mobileNumber;
+        this.workNumber = workNumber;
+        this.fax = fax;
+        this.mail1 = mail1;
+        this.mail2 = mail2;
+        this.mail3 = mail3;
+        this.site = site;
+    }
     public ContactData(String firstname, String middlename, String lastname, String nickname, String title, String companyName, String companyAddress, String homeNumber, String mobileNumber, String workNumber, String fax, String mail1, String mail2, String mail3, String site) {
+        this.id = null;
         this.firstname = firstname;
         this.middlename = middlename;
         this.lastname = lastname;
@@ -35,14 +55,12 @@ public class ContactData {
         this.site = site;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
 
     @Override
     public String toString() {
         return "ContactData{" +
-                "firstname='" + firstname + '\'' +
+                "id='" + id + '\'' +
+                ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", companyAddress='" + companyAddress + '\'' +
                 ", homeNumber='" + homeNumber + '\'' +
@@ -54,6 +72,13 @@ public class ContactData {
                 '}';
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
     public String getMiddlename() {
         return middlename;
     }
@@ -106,6 +131,10 @@ public class ContactData {
         return mail3;
     }
 
+    public String getSite() {
+        return site;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,6 +142,7 @@ public class ContactData {
 
         ContactData that = (ContactData) o;
 
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
         if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
         if (companyAddress != null ? !companyAddress.equals(that.companyAddress) : that.companyAddress != null)
@@ -127,7 +157,8 @@ public class ContactData {
 
     @Override
     public int hashCode() {
-        int result = firstname != null ? firstname.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
         result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
         result = 31 * result + (companyAddress != null ? companyAddress.hashCode() : 0);
         result = 31 * result + (homeNumber != null ? homeNumber.hashCode() : 0);
@@ -137,9 +168,5 @@ public class ContactData {
         result = 31 * result + (mail2 != null ? mail2.hashCode() : 0);
         result = 31 * result + (mail3 != null ? mail3.hashCode() : 0);
         return result;
-    }
-
-    public String getSite() {
-        return site;
     }
 }
