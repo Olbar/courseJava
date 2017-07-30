@@ -39,6 +39,21 @@ public class ContactData {
         return firstname;
     }
 
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", companyAddress='" + companyAddress + '\'' +
+                ", homeNumber='" + homeNumber + '\'' +
+                ", mobileNumber='" + mobileNumber + '\'' +
+                ", workNumber='" + workNumber + '\'' +
+                ", mail1='" + mail1 + '\'' +
+                ", mail2='" + mail2 + '\'' +
+                ", mail3='" + mail3 + '\'' +
+                '}';
+    }
+
     public String getMiddlename() {
         return middlename;
     }
@@ -89,6 +104,39 @@ public class ContactData {
 
     public String getMail3() {
         return mail3;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactData that = (ContactData) o;
+
+        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
+        if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
+        if (companyAddress != null ? !companyAddress.equals(that.companyAddress) : that.companyAddress != null)
+            return false;
+        if (homeNumber != null ? !homeNumber.equals(that.homeNumber) : that.homeNumber != null) return false;
+        if (mobileNumber != null ? !mobileNumber.equals(that.mobileNumber) : that.mobileNumber != null) return false;
+        if (workNumber != null ? !workNumber.equals(that.workNumber) : that.workNumber != null) return false;
+        if (mail1 != null ? !mail1.equals(that.mail1) : that.mail1 != null) return false;
+        if (mail2 != null ? !mail2.equals(that.mail2) : that.mail2 != null) return false;
+        return mail3 != null ? mail3.equals(that.mail3) : that.mail3 == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstname != null ? firstname.hashCode() : 0;
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + (companyAddress != null ? companyAddress.hashCode() : 0);
+        result = 31 * result + (homeNumber != null ? homeNumber.hashCode() : 0);
+        result = 31 * result + (mobileNumber != null ? mobileNumber.hashCode() : 0);
+        result = 31 * result + (workNumber != null ? workNumber.hashCode() : 0);
+        result = 31 * result + (mail1 != null ? mail1.hashCode() : 0);
+        result = 31 * result + (mail2 != null ? mail2.hashCode() : 0);
+        result = 31 * result + (mail3 != null ? mail3.hashCode() : 0);
+        return result;
     }
 
     public String getSite() {
