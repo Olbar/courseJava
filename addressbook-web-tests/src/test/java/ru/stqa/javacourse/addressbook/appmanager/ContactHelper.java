@@ -3,7 +3,11 @@ package ru.stqa.javacourse.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import ru.stqa.javacourse.addressbook.model.ContactData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -56,6 +60,7 @@ public class ContactHelper extends HelperBase {
         submitContactCreation();
         returnToHomePage();
     }
+
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
@@ -69,4 +74,22 @@ public class ContactHelper extends HelperBase {
     }
 
 
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<ContactData>();
+        List<WebElement> elements = wd.findElements(By.cssSelector("td.center input[type='checkbox']"));
+        for (WebElement element : elements) {
+            String firstname = element.getText();
+            String lastname = element.getText();
+            String companyAddress = element.getText();
+            String mail1 = element.getText();
+            String mail2 = element.getText();
+            String mail3 = element.getText();
+            String homeNumber = element.getText();
+            String mobileNumber = element.getText();
+            String workNumber = element.getText();
+            ContactData contact = new ContactData(firstname, null, lastname, null, null, null, companyAddress, homeNumber, mobileNumber, workNumber, null, mail1, mail2, mail3, null);
+            contacts.add(contact);
+        }
+        return contacts;
+    }
 }

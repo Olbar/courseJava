@@ -5,20 +5,22 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.javacourse.addressbook.model.ContactData;
 
+import java.util.List;
+
 public class ContactModificationTest extends TestBase {
 
     @Test
     public void testContactModification() {
         app.getNavigationHelper().gotoHomePage();
-        int before =app.getContactHelper().getContactCount();
         if(! app.getContactHelper().isThereAContact()){
             app.getContactHelper().createContact(new ContactData("Ivan", "Ivanovich", "Ivanov", "ivanov-i", "user", "roga i kopita", "Lenin st 5", "4565656", "+79213454545", "3454545", "3454546", "ivanov-i@mail.ru", "ivanov-i@gmail.com", "ivanov-i@yandex.ru", "no"));
         }
-        app.getContactHelper().editContact(before-1);
+        List<ContactData> before =app.getContactHelper().getContactList();
+        app.getContactHelper().editContact(before.size()-1);
         app.getContactHelper().fillContactForm(new ContactData("Ivan2", "Ivanovich2", "Ivanov2", "ivanov-i2", "user2", "roga i kopita", "Lenin st 5", "4565656", "+79213454545", "3454545", "3454546", "ivanov-i@mail.ru", "ivanov-i@gmail.com", "ivanov-i@yandex.ru", "no"));
         app.getContactHelper().submitContactModification();
         app.getNavigationHelper().gotoHomePage();
-        int after =app.getContactHelper().getContactCount();
-        Assert.assertEquals(after, before);
+        List<ContactData> after =app.getContactHelper().getContactList();
+        Assert.assertEquals(after.size(), before.size());
     }
 }
