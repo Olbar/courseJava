@@ -36,8 +36,29 @@ public class ContactData {
         this.mail3 = mail3;
         this.site = site;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactData that = (ContactData) o;
+
+        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
+        if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
+        return companyAddress != null ? companyAddress.equals(that.companyAddress) : that.companyAddress == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstname != null ? firstname.hashCode() : 0;
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + (companyAddress != null ? companyAddress.hashCode() : 0);
+        return result;
+    }
+
     public ContactData(String firstname, String middlename, String lastname, String nickname, String title, String companyName, String companyAddress, String homeNumber, String mobileNumber, String workNumber, String fax, String mail1, String mail2, String mail3, String site) {
-        this.id = 0;
+        this.id = Integer.MAX_VALUE;
         this.firstname = firstname;
         this.middlename = middlename;
         this.lastname = lastname;
@@ -48,6 +69,7 @@ public class ContactData {
         this.homeNumber = homeNumber;
         this.mobileNumber = mobileNumber;
         this.workNumber = workNumber;
+
         this.fax = fax;
         this.mail1 = mail1;
         this.mail2 = mail2;
@@ -128,28 +150,6 @@ public class ContactData {
 
     public String getSite() {
         return site;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ContactData that = (ContactData) o;
-
-        if (id != that.id) return false;
-        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
-        if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
-        return companyAddress != null ? companyAddress.equals(that.companyAddress) : that.companyAddress == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-        result = 31 * result + (companyAddress != null ? companyAddress.hashCode() : 0);
-        return result;
     }
 
     public void setId(int id) {
