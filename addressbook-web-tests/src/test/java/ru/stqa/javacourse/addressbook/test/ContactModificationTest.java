@@ -16,7 +16,7 @@ public class ContactModificationTest extends TestBase {
     public void ensurePreconditions() {
         app.goTo().homePage();
         if (app.contact().list().size()==0) {
-            app.contact().create(new ContactData("Ivan", "Ivanovich", "Ivanov", "ivanov-i", "user", "roga i kopita", "Lenin st 5", "4565656", "+79213454545", "3454545", "3454546", "ivanov-i@mail.ru", "ivanov-i@gmail.com", "ivanov-i@yandex.ru", "no"));
+            app.contact().create(new ContactData().withFirstname("Ivan").withLastname("Ivanov").withCompanyAddress("Lenina 7"));
         }
     }
 
@@ -24,7 +24,13 @@ public class ContactModificationTest extends TestBase {
     public void testContactModification() {
         List<ContactData> before =app.contact().list();
         int index=before.size()-1;
-        ContactData contact = new ContactData(before.get(index).getId(),"Ivan2", "Ivanovich2", "Ivanov2", "ivanov-i2", "user2", "roga i kopita", "Lenin st 5", "4565656", "+79213454545", "3454545", "3454546", "ivanov-i@mail.ru", "ivanov-i@gmail.com", "ivanov-i@yandex.ru", "no");
+        ContactData contact = new ContactData()
+                .withId(before.get(index).getId())
+                .withFirstname("Ivan2").withMiddlename("Ivanovich2").withLastname("Ivanov2")
+                .withCompanyAddress("Lenina 5").withNickname("Vano").withCompanyName("Roga and Copita")
+                .withHomeNumber("3232").withFax("34242").withMail1("ddd@mail.ru").withMail2("eee@mail.ru")
+                .withMail3("erw@mail.ru").withMobileNumber("23423432423").withWorkNumber("2342342")
+                .withTitle("ROGA").withSite("www.ru");
         app.contact().modify(index, contact);
         List<ContactData> after =app.contact().list();
         Assert.assertEquals(after.size(), before.size());

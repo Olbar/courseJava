@@ -93,7 +93,7 @@ public class ContactHelper extends HelperBase {
             String firstname = element.findElement(By.cssSelector("table[id='maintable'] tr[name='entry'] td:nth-child(3)")).getText();
             String lastname = element.findElement(By.cssSelector("table[id='maintable'] tr[name='entry'] td:nth-child(2)")).getText();
             String companyAddress = element.findElement(By.cssSelector("table[id='maintable'] tr[name='entry'] td:nth-child(4)")).getText();
-            ContactData contact = new ContactData(id, firstname, null, lastname, null, null, null, companyAddress, null, null, null, null, null, null, null, null);
+            ContactData contact = new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).withCompanyAddress(companyAddress);
             contacts.add(contact);
         }
         return contacts;
