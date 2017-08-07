@@ -6,8 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.javacourse.addressbook.model.ContactData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -41,10 +42,10 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
-    public void editContact(int index) {
-        wd.findElements(By.cssSelector("img[title='Edit'][alt='Edit']")).get(index).click();
-    }
 
+    private void editContactById(int id) {
+        wd.findElement(By.cssSelector("a[href='edit.php?id="+id+"'] img[title='Edit'][alt='Edit']")).click();
+    }
 
     public void submitContactModification() {
         click(By.cssSelector("input[value='Update']"));
@@ -60,16 +61,18 @@ public class ContactHelper extends HelperBase {
         submitContactCreation();
         returnToHomePage();
     }
-    public void modify(int index, ContactData contact) {
-       editContact(index);
+    public void modify(ContactData contact) {
+       editContactById(contact.getId());
        fillContactForm(contact);
        submitContactModification();
        returnToHomePage();
     }
-    public void delete(int index) {
-        editContact(index);
+
+    public void delete(ContactData contact) {
+        editContactById(contact.getId());
         deleteContact();
     }
+
 
 
     public boolean isThereAContact() {
@@ -85,8 +88,8 @@ public class ContactHelper extends HelperBase {
     }
 
 
-    public List<ContactData> list() {
-        List<ContactData> contacts = new ArrayList<ContactData>();
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<ContactData>();
         List<WebElement> elements = wd.findElements(By.cssSelector("tr[name='entry']"));
         for (WebElement element : elements) {
             int id =Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
@@ -98,4 +101,6 @@ public class ContactHelper extends HelperBase {
         }
         return contacts;
     }
+
+
 }
