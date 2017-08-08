@@ -1,18 +1,10 @@
 package ru.stqa.javacourse.addressbook.test;
 
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.javacourse.addressbook.model.ContactData;
 import ru.stqa.javacourse.addressbook.model.Contacts;
-
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -40,8 +32,8 @@ public class ContactModificationTest extends TestBase {
                 .withMail3("erw@mail.ru").withMobileNumber("23423432423").withWorkNumber("2342342")
                 .withTitle("ROGA").withSite("www.ru");
         app.contact().modify(contact);
+        assertEquals(app.contact().count(), before.size());
         Contacts after =app.contact().all();
-        assertEquals(after.size(), before.size());
         assertThat(after, equalTo(before.withAdded(contact)));
     }
 

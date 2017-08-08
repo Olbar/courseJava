@@ -45,7 +45,7 @@ public class ContactHelper extends HelperBase {
 
 
     private void editContactById(int id) {
-        wd.findElement(By.cssSelector("a[href='edit.php?id="+id+"'] img[title='Edit'][alt='Edit']")).click();
+        wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "'] img[title='Edit'][alt='Edit']")).click();
     }
 
     public void submitContactModification() {
@@ -60,20 +60,23 @@ public class ContactHelper extends HelperBase {
         initContactCreation();
         fillContactForm(contact);
         submitContactCreation();
+        contactCache = null;
         returnToHomePage();
     }
+
     public void modify(ContactData contact) {
-       editContactById(contact.getId());
-       fillContactForm(contact);
-       submitContactModification();
-       returnToHomePage();
+        editContactById(contact.getId());
+        fillContactForm(contact);
+        submitContactModification();
+        contactCache = null;
+        returnToHomePage();
     }
 
     public void delete(ContactData contact) {
         editContactById(contact.getId());
         deleteContact();
+        contactCache = null;
     }
-
 
 
     public boolean isThereAContact() {
@@ -84,23 +87,27 @@ public class ContactHelper extends HelperBase {
         click(By.cssSelector("input[value='Delete']"));
     }
 
-    public int getContactCount() {
+    public int count() {
         return wd.findElements(By.name("selected[]")).size();
     }
 
+    public Contacts contactCache = null;
 
     public Contacts all() {
-        Contacts contacts = new Contacts();
+        if(contactCache!=null){
+            return new Contacts(contactCache);
+        }
+        contactCache = new Contacts();
         List<WebElement> elements = wd.findElements(By.cssSelector("tr[name='entry']"));
         for (WebElement element : elements) {
-            int id =Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String firstname = element.findElement(By.cssSelector("table[id='maintable'] tr[name='entry'] td:nth-child(3)")).getText();
             String lastname = element.findElement(By.cssSelector("table[id='maintable'] tr[name='entry'] td:nth-child(2)")).getText();
             String companyAddress = element.findElement(By.cssSelector("table[id='maintable'] tr[name='entry'] td:nth-child(4)")).getText();
             ContactData contact = new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).withCompanyAddress(companyAddress);
-            contacts.add(contact);
+            contactCache.add(contact);
         }
-        return contacts;
+        return new Contacts(contactCache);
     }
 
 
