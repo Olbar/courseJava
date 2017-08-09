@@ -7,7 +7,7 @@ import ru.stqa.javacourse.addressbook.model.Groups;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class GroupCreationTests extends TestBase {
+public class GroupCreationTest extends TestBase {
 
 
     @Test
@@ -20,8 +20,6 @@ public class GroupCreationTests extends TestBase {
         Groups after = app.group().all();
         assertThat(after, equalTo(before.withAdded(group.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
     }
-
-
 
     @Test
     public void testBadGroupCreation() {
