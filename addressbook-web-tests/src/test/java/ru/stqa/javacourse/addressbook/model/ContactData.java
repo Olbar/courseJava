@@ -17,6 +17,7 @@ public class ContactData {
     private  String mail2;
     private  String mail3;
     private  String site;
+    private String allPhones;
 
     public ContactData withFirstname(String firstname) {
         this.firstname = firstname;
@@ -97,6 +98,7 @@ public class ContactData {
         this.id = id;
         return this;
     }
+
 
 
     @Override
@@ -205,4 +207,12 @@ public class ContactData {
         return site;
     }
 
+    public String getAllPhones() {
+        return allPhones;
+    }
+
+    public ContactData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
+    }
 }

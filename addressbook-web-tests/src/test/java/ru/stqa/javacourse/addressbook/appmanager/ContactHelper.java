@@ -104,9 +104,9 @@ public class ContactHelper extends HelperBase {
             String firstname = cells.get(2).getText();
             String lastname = cells.get(1).getText();
             String companyAddress = cells.get(3).getText();
-            String[] phones = cells.get(5).getText().split("\n");
+            String allPhones = cells.get(5).getText();
             ContactData contact = new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).withCompanyAddress(companyAddress)
-                    .withHomeNumber(phones[0]).withMobileNumber(phones[1]).withWorkNumber(phones[2]);
+                    .withAllPhones(allPhones);
             contactCache.add(contact);
         }
         return new Contacts(contactCache);
