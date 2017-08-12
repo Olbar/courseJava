@@ -32,9 +32,9 @@ public class ContactHelper extends HelperBase {
         type(By.name("mobile"), contactData.getMobileNumber());
         type(By.name("work"), contactData.getWorkNumber());
         type(By.name("fax"), contactData.getFax());
-        type(By.name("email"), contactData.getMail1());
-        type(By.name("email2"), contactData.getMail2());
-        type(By.name("email3"), contactData.getMail3());
+        type(By.name("email"), contactData.getEmail());
+        type(By.name("email2"), contactData.getEmail2());
+        type(By.name("email3"), contactData.getEmail3());
         type(By.name("homepage"), contactData.getSite());
     }
 
@@ -105,8 +105,9 @@ public class ContactHelper extends HelperBase {
             String lastname = cells.get(1).getText();
             String companyAddress = cells.get(3).getText();
             String allPhones = cells.get(5).getText();
+            String allMailes = cells.get(4).getText();
             ContactData contact = new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).withCompanyAddress(companyAddress)
-                    .withAllPhones(allPhones);
+                    .withAllPhones(allPhones).withAllMails(allMailes);
             contactCache.add(contact);
         }
         return new Contacts(contactCache);
@@ -121,10 +122,14 @@ public class ContactHelper extends HelperBase {
         String home = wd.findElement(By.name("home")).getAttribute("value");
         String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
         String work = wd.findElement(By.name("work")).getAttribute("value");
+        String email = wd.findElement(By.name("email")).getAttribute("value");
+        String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+        String email3 = wd.findElement(By.name("email3")).getAttribute("value");
         wd.navigate().back();
         return new ContactData().withId(contact.getId()).withFirstname(firstname)
                 .withLastname(lastname).withCompanyAddress(companyAddress).withHomeNumber(home)
-                .withMobileNumber(mobile).withWorkNumber(work);
+                .withMobileNumber(mobile).withWorkNumber(work).withMail(email)
+                .withMail2(email2).withMail3(email3);
     }
 
 
