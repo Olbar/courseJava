@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.javacourse.addressbook.model.ContactData;
 import ru.stqa.javacourse.addressbook.model.Contacts;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -36,6 +37,8 @@ public class ContactHelper extends HelperBase {
         type(By.name("email2"), contactData.getEmail2());
         type(By.name("email3"), contactData.getEmail3());
         type(By.name("homepage"), contactData.getSite());
+        attach(By.name("photo"), contactData.getPhoto());
+
     }
 
     public void initContactCreation() {

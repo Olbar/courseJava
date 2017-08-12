@@ -1,5 +1,7 @@
 package ru.stqa.javacourse.addressbook.model;
 
+import java.io.File;
+
 public class ContactData {
     private  int id;
     private  String firstname;
@@ -19,6 +21,17 @@ public class ContactData {
     private  String site;
     private String allPhones;
     private String allMailes;
+
+    public File getPhoto() {
+        return photo;
+    }
+
+    public ContactData withPhoto(File photo) {
+        this.photo = photo;
+        return this;
+    }
+
+    private File photo;
 
 
     public String getAllMails() {
@@ -113,7 +126,6 @@ public class ContactData {
     }
 
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -124,11 +136,7 @@ public class ContactData {
         if (id != that.id) return false;
         if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
         if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
-        if (companyAddress != null ? !companyAddress.equals(that.companyAddress) : that.companyAddress != null)
-            return false;
-        if (homeNumber != null ? !homeNumber.equals(that.homeNumber) : that.homeNumber != null) return false;
-        if (mobileNumber != null ? !mobileNumber.equals(that.mobileNumber) : that.mobileNumber != null) return false;
-        return workNumber != null ? workNumber.equals(that.workNumber) : that.workNumber == null;
+        return companyAddress != null ? companyAddress.equals(that.companyAddress) : that.companyAddress == null;
     }
 
     @Override
@@ -137,9 +145,6 @@ public class ContactData {
         result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
         result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
         result = 31 * result + (companyAddress != null ? companyAddress.hashCode() : 0);
-        result = 31 * result + (homeNumber != null ? homeNumber.hashCode() : 0);
-        result = 31 * result + (mobileNumber != null ? mobileNumber.hashCode() : 0);
-        result = 31 * result + (workNumber != null ? workNumber.hashCode() : 0);
         return result;
     }
 
@@ -150,9 +155,6 @@ public class ContactData {
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", companyAddress='" + companyAddress + '\'' +
-                ", homeNumber='" + homeNumber + '\'' +
-                ", mobileNumber='" + mobileNumber + '\'' +
-                ", workNumber='" + workNumber + '\'' +
                 '}';
     }
 

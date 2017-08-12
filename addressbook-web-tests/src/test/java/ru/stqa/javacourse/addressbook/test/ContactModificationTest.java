@@ -27,10 +27,8 @@ public class ContactModificationTest extends TestBase {
         ContactData contact = new ContactData()
                 .withId(modifiedContact.getId())
                 .withFirstname("Ivan2").withMiddlename("Ivanovich2").withLastname("Ivanov2")
-                .withCompanyAddress("Lenina 5").withNickname("Vano").withCompanyName("Roga and Copita")
-                .withHomeNumber("3232").withFax("34242").withMail("ddd@mail.ru").withMail2("eee@mail.ru")
-                .withMail3("erw@mail.ru").withMobileNumber("23423432423").withWorkNumber("2342342")
-                .withTitle("ROGA").withSite("www.ru");
+                .withCompanyAddress("Lenina 5").withHomeNumber("234")
+                .withMobileNumber("24234").withWorkNumber("3242");
         app.contact().modify(contact);
         assertEquals(app.contact().count(), before.size());
         Contacts after =app.contact().all();
