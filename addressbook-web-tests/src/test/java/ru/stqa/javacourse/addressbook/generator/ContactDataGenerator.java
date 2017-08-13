@@ -39,36 +39,37 @@ public class ContactDataGenerator {
 
     private void run() throws IOException {
         List<ContactData> contacts = generateContacts(count);
-        if(format.equals("csv")){
+        if (format.equals("csv")) {
             saveAsCsv(contacts, new File(file));
-        }else if(format.equals("json")){
+        } else if (format.equals("json")) {
             saveAsJson(contacts, new File(file));
-        }else{
+        } else {
             System.out.println("Unrecognized format" + format);
         }
 
     }
 
     private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
-        Gson gson=new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(contacts);
-        Writer writer=new FileWriter(file);
-        writer.write(json);
-        writer.close();
-    }
-
-
-    private  void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
-        Writer writer = new FileWriter(file);
-        for (ContactData contact : contacts) {
-            writer.write(String.format("%s;%s;%s;%s;%s;%s\n", contact.getFirstname(),
-                    contact.getLastname(), contact.getCompanyAddress(),
-                    contact.getHomeNumber(), contact.getMobileNumber(), contact.getWorkNumber()));
+        try (Writer writer = new FileWriter(file)) {
+            writer.write(json);
         }
-        writer.close();
+
     }
 
-    private  List<ContactData> generateContacts(int count) {
+
+    private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
+        try (Writer writer = new FileWriter(file)) {
+            for (ContactData contact : contacts) {
+                writer.write(String.format("%s;%s;%s;%s;%s;%s\n", contact.getFirstname(),
+                        contact.getLastname(), contact.getCompanyAddress(),
+                        contact.getHomeNumber(), contact.getMobileNumber(), contact.getWorkNumber()));
+            }
+        }
+    }
+
+    private List<ContactData> generateContacts(int count) {
         List<ContactData> contacts = new ArrayList<ContactData>();
         for (int i = 0; i < count; i++) {
             contacts.add(new ContactData().withFirstname(String.format("Ivan %s", i))
