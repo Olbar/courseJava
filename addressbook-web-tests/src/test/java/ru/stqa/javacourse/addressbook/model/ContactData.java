@@ -1,47 +1,80 @@
 package ru.stqa.javacourse.addressbook.model;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
-    private  int id;
+    @Id
+    @Column(name = "id")
+    private int id;
     @Expose
-    private  String firstname;
-    private  String middlename;
+    @Column(name = "firstname")
+    private String firstname;
+    private String middlename;
     @Expose
-    private  String lastname;
+    @Column(name = "lastname")
+    private String lastname;
     @Expose
-    private  String nickname;
-    private  String title;
-    private  String companyName;
+    private String nickname;
+    @Transient
+    private String group;
+    private String title;
+    @Column(name = "company")
+    private String companyName;
     @Expose
-    private  String companyAddress;
+    @Column(name = "address")
+    @Type(type = "text")
+    private String companyAddress;
     @Expose
-    private  String homeNumber;
+    @Column(name = "home")
+    @Type(type = "text")
+    private String homeNumber;
     @Expose
-    private  String mobileNumber;
+    @Column(name = "mobile")
+    @Type(type = "text")
+    private String mobileNumber;
     @Expose
-    private  String workNumber;
+    @Column(name = "work")
+    @Type(type = "text")
+    private String workNumber;
     @Expose
-    private  String fax;
-    private  String email;
-    private  String email2;
-    private  String email3;
-    private  String site;
+    @Column(name = "fax")
+    @Type(type = "text")
+    private String fax;
+    @Column(name = "email")
+    @Type(type = "text")
+    private String email;
+    @Column(name = "email2")
+    @Type(type = "text")
+    private String email2;
+    @Column(name = "email3")
+    @Type(type = "text")
+    private String email3;
+    @Column(name = "homepage")
+    @Type(type = "text")
+    private String site;
+    @Transient
     private String allPhones;
+    @Transient
     private String allMailes;
 
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photo;
+
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
-
-    private File photo;
 
 
     public String getAllMails() {
@@ -52,7 +85,6 @@ public class ContactData {
         this.allMailes = allMails;
         return this;
     }
-
 
 
     public ContactData withFirstname(String firstname) {
@@ -72,6 +104,11 @@ public class ContactData {
 
     public ContactData withNickname(String nickname) {
         this.nickname = nickname;
+        return this;
+    }
+
+    public ContactData withGroup(String group) {
+        this.group = group;
         return this;
     }
 
@@ -230,6 +267,10 @@ public class ContactData {
 
     public String getSite() {
         return site;
+    }
+
+    public String getGroup() {
+        return group;
     }
 
     public String getAllPhones() {
