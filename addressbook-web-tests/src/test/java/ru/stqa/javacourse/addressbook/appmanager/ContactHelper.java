@@ -10,6 +10,8 @@ import ru.stqa.javacourse.addressbook.model.Contacts;
 import java.io.File;
 import java.util.List;
 
+import static javafx.beans.binding.Bindings.select;
+
 
 public class ContactHelper extends HelperBase {
 
@@ -37,7 +39,6 @@ public class ContactHelper extends HelperBase {
         type(By.name("email2"), contactData.getEmail2());
         type(By.name("email3"), contactData.getEmail3());
         type(By.name("homepage"), contactData.getSite());
-        type(By.name("group"), contactData.getGroup());
         attach(By.name("photo"), contactData.getPhoto());
 
     }

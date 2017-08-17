@@ -183,7 +183,10 @@ public class ContactData {
         if (id != that.id) return false;
         if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
         if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
-        return companyAddress != null ? companyAddress.equals(that.companyAddress) : that.companyAddress == null;
+        if (companyAddress != null ? !companyAddress.equals(that.companyAddress) : that.companyAddress != null)
+            return false;
+        if (allPhones != null ? !allPhones.equals(that.allPhones) : that.allPhones != null) return false;
+        return allMailes != null ? allMailes.equals(that.allMailes) : that.allMailes == null;
     }
 
     @Override
@@ -192,12 +195,15 @@ public class ContactData {
         result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
         result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
         result = 31 * result + (companyAddress != null ? companyAddress.hashCode() : 0);
+        result = 31 * result + (allPhones != null ? allPhones.hashCode() : 0);
+        result = 31 * result + (allMailes != null ? allMailes.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "ContactData{" +
+
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +

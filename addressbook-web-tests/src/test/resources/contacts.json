@@ -5,22 +5,7 @@
     "companyAddress": "Lenin street 5 0",
     "homeNumber": "563256 0",
     "mobileNumber": "564332 0",
-    "workNumber": "5634536 0"
-  },
-  {
-    "firstname": "Ivan 1",
-    "lastname": "Ivanov 1",
-    "companyAddress": "Lenin street 5 1",
-    "homeNumber": "563256 1",
-    "mobileNumber": "564332 1",
-    "workNumber": "5634536 1"
-  },
-  {
-    "firstname": "Ivan 2",
-    "lastname": "Ivanov 2",
-    "companyAddress": "Lenin street 5 2",
-    "homeNumber": "563256 2",
-    "mobileNumber": "564332 2",
-    "workNumber": "5634536 2"
+    "workNumber": "5634536 0",
+    "photo":"src/test/resources/cat.jpg"
   }
 ]
