@@ -2,9 +2,12 @@ package ru.stqa.javacourse.addressbook.model;
 
 import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.Type;
+import org.hibernate.query.*;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "addressbook")
@@ -21,8 +24,7 @@ public class ContactData {
     private String lastname;
     @Expose
     private String nickname;
-    @Transient
-    private String group;
+
     private String title;
     @Column(name = "company")
     private String companyName;
@@ -67,6 +69,16 @@ public class ContactData {
     @Type(type = "text")
     private String photo;
 
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name="address_in_groups", joinColumns = @JoinColumn(name="id"),
+            inverseJoinColumns = @JoinColumn(name="group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
+
+
+    public Groups getGroups() {
+        return new Groups(groups);
+    }
+
     public File getPhoto() {
         return new File(photo);
     }
@@ -107,10 +119,6 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withGroup(String group) {
-        this.group = group;
-        return this;
-    }
 
     public ContactData withTitle(String title) {
         this.title = title;
@@ -183,7 +191,9 @@ public class ContactData {
         if (id != that.id) return false;
         if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
         if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
-        return companyAddress != null ? companyAddress.equals(that.companyAddress) : that.companyAddress == null;
+        if (companyAddress != null ? !companyAddress.equals(that.companyAddress) : that.companyAddress != null)
+            return false;
+        return email != null ? email.equals(that.email) : that.email == null;
     }
 
     @Override
@@ -192,6 +202,7 @@ public class ContactData {
         result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
         result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
         result = 31 * result + (companyAddress != null ? companyAddress.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
 
@@ -269,8 +280,9 @@ public class ContactData {
         return site;
     }
 
-    public String getGroup() {
-        return group;
+
+    public void setGroups(Set<GroupData> groups) {
+        this.groups = groups;
     }
 
     public String getAllPhones() {
@@ -279,6 +291,11 @@ public class ContactData {
 
     public ContactData withAllPhones(String allPhones) {
         this.allPhones = allPhones;
+        return this;
+    }
+
+    public ContactData inGroup(GroupData group) {
+        groups.add(group);
         return this;
     }
 }

@@ -32,7 +32,7 @@ public class ContactModificationTest extends TestBase {
                 .withId(modifiedContact.getId())
                 .withFirstname("Ivan2").withMiddlename("Ivanovich2").withLastname("Ivanov2")
                 .withCompanyAddress("Lenina 5").withHomeNumber("234")
-                .withMobileNumber("24234").withWorkNumber("3242").withPhoto(photo);
+                .withMobileNumber("24234").withWorkNumber("3242").withMail("ewrw").withPhoto(photo);
         app.goTo().homePage();
         app.contact().modify(contact);
         assertEquals(app.contact().count(), before.size());

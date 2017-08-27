@@ -3,28 +3,39 @@ package ru.stqa.javacourse.addressbook.model;
 import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name="group_list")
+@Table(name = "group_list")
 public class GroupData {
     @Id
-    @Column(name="group_id")
-    private int id=Integer.MAX_VALUE;
+    @Column(name = "group_id")
+    private int id = Integer.MAX_VALUE;
     @Expose
-    @Column(name="group_name")
-    private  String name;
+    @Column(name = "group_name")
+    private String name;
     @Expose
-    @Column(name="group_header")
-    @Type(type="text")
-    private  String header;
+    @Column(name = "group_header")
+    @Type(type = "text")
+    private String header;
     @Expose
-    @Column(name="group_footer")
-    @Type(type="text")
-    private  String footer;
+    @Column(name = "group_footer")
+    @Type(type = "text")
+    private String footer;
+
+    @ManyToMany(mappedBy = "groups",fetch=FetchType.EAGER)
+    private Set<ContactData> contacts = new HashSet<ContactData>();
+
+    public void setContacts(Set<ContactData> contacts) {
+        this.contacts = contacts;
+    }
+
+    public Contacts getContacts() {
+        return new Contacts(contacts);
+    }
+
 
     public int getId() {
         return id;
