@@ -18,33 +18,40 @@ public class ContactDeletionFromGroupTest extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        Groups groups =app.db().groups();
+        
         if(app.db().groups().size()==0){
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("test1"));
             app.goTo().homePage();
         }
+
         if(app.db().contacts().size()==0){
             app.goTo().homePage();
-            app.contact().create(new ContactData().withFirstname("Ivan").withLastname("Ivanov").withCompanyAddress("Lenina 7").inGroup(groups.iterator().next()).withPhoto(photo));
+            app.contact().create(new ContactData().withFirstname("Ivan").withLastname("Ivanov").withCompanyAddress("Lenina 7").withPhoto(photo));
         }
+
+        int beforeCount = app.db().groups().iterator().next().getContacts().size();
+        GroupData groupAdd=app.db().groups().iterator().next();
+        if(beforeCount==0){
+            Contacts before =app.db().contacts();
+            app.contact().addContactToGroup(before, groupAdd.getId());
+
+        }
+
     }
 
     @Test
     public void testContactDeletionFromGroup() {
-        int beforeCount = app.db().groups().iterator().next().getContacts().size();
-        if(beforeCount==0){
-            Contacts before =app.db().contacts();
-            int beforeGroups =app.db().groups().iterator().next().getId();
-            app.contact().addContactToGroup(before, beforeGroups);
-            beforeCount=beforeCount+1;
-        }
-        int beforeGroups =app.db().groups().iterator().next().getId();
+
+        Groups groupsBefore= app.db().contacts().iterator().next().getGroups();
+        Contacts before=app.db().contacts();
+        GroupData groupOut=app.db().groups().iterator().next();
+
         app.goTo().homePage();
-        Contacts countGroupsBefore=app.db().groups().iterator().next().getContacts();
-        app.contact().removeContactFromGroup(beforeCount, beforeGroups);
-        Contacts countGroupsAfter=app.db().groups().iterator().next().getContacts();
-        assertThat(countGroupsAfter.size(), equalTo(countGroupsBefore.size()-1));
+        app.contact().removeContactFromGroup(before, groupOut.getId());
+
+        Groups groupsAfter= app.db().contacts().iterator().next().getGroups();
+        assertThat(groupsAfter, equalTo(groupsBefore.without(groupOut)));
         verifyContactListInUI();
     }
 

@@ -6,6 +6,8 @@ import org.testng.annotations.Test;
 import ru.stqa.javacourse.addressbook.model.ContactData;
 import ru.stqa.javacourse.addressbook.model.Contacts;
 import ru.stqa.javacourse.addressbook.model.GroupData;
+import ru.stqa.javacourse.addressbook.model.Groups;
+
 import java.io.File;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -22,21 +24,23 @@ public class AdditionContactToGroupTest extends TestBase {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("test1"));
         }
+        if(app.db().contacts().size()==0){
+            app.goTo().homePage();
+            app.contact().create(new ContactData().withFirstname("Petr").withLastname("Ivanov").withCompanyAddress("Lenina 7").withPhoto(photo));
+        }
     }
 
     @Test
     public void testContactAdditionToGroup() {
-
-        ContactData newContact= new ContactData().withFirstname("Petr").withLastname("Petrov")
-                .withCompanyAddress("ul. Blocka 6").withPhoto(photo);
-        app.goTo().homePage();
-        app.contact().create(newContact);
+        Groups groupsBefore= app.db().contacts().iterator().next().getGroups();
         Contacts before =app.db().contacts();
-        int beforeGroups =app.db().groups().iterator().next().getId();// получаем id группы из бд, в которую мы будем добавлять контакт.
-        Contacts countGroupsBefore=app.db().groups().iterator().next().getContacts();
-        app.contact().addContactToGroup(before, beforeGroups);
-        Contacts countGroupsAfter=app.db().groups().iterator().next().getContacts();
-        assertThat(countGroupsAfter.size()-1, equalTo(countGroupsBefore.size()));
+        GroupData groupAdd=app.db().groups().iterator().next();
+
+        app.goTo().homePage();
+        app.contact().addContactToGroup(before, groupAdd.getId());
+        
+        Groups groupsAfter=app.db().contacts().iterator().next().getGroups();
+        assertThat(groupsAfter, equalTo(groupsBefore.withAdded(groupAdd)));
         verifyContactListInUI();
     }
 

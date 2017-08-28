@@ -171,8 +171,8 @@ public class ContactHelper extends HelperBase {
     }
 
 
-    public void deleteContactFromGroup(int before) {
-        selectContact(before - 1);
+    public void deleteContactFromGroup(Contacts before) {
+        selectContact(before.size() - 1);
         click(By.name("remove"));
 
     }
@@ -182,7 +182,7 @@ public class ContactHelper extends HelperBase {
 
     }
 
-    public void removeContactFromGroup(int before, int beforeGroups) {
+    public void removeContactFromGroup(Contacts before, int beforeGroups) {
         selectGroupList(beforeGroups);
         deleteContactFromGroup(before);
         returnToMainPage();
