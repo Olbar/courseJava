@@ -24,16 +24,16 @@ public class ChangePasswordTest extends TestBase {
     public void testChangePassword() throws IOException, MessagingException {
         String newPassword="newpassword";
         app.session().login("administrator", "root");
-        app.navigator().goToManagePage();
-        app.navigator().goToManageOfUsersPage();
-        app.navigator().chooseUser();
-        String user = app.navigator().getUserName();
-        String email = app.navigator().getMail();
-        app.navigator().resetPassword();
+        app.resetPassword().goToManagePage();
+        app.resetPassword().goToManageOfUsersPage();
+        app.resetPassword().chooseUser();
+        String user = app.resetPassword().getUserName();
+        String email = app.resetPassword().getMail();
+        app.resetPassword().resetPassword();
         List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
         String resetPasswordLink = findResetPasswordLink(mailMessages, email);
 
-        app.navigator().changePasswordFinish(resetPasswordLink,newPassword);
+        app.resetPassword().changePasswordFinish(resetPasswordLink,newPassword);
         assertTrue(app.newSession().login(user,newPassword));
 
     }

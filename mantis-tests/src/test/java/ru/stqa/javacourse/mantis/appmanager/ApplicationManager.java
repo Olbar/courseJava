@@ -64,7 +64,7 @@ public class ApplicationManager {
         return sessionHelper;
     }
 
-    public ResetPasswordHelper navigator() {
+    public ResetPasswordHelper resetPassword() {
         if(resetPasswordHelper ==null){
             resetPasswordHelper =new ResetPasswordHelper(this);
         }
