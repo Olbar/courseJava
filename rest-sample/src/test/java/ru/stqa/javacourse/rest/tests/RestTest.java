@@ -1,4 +1,4 @@
-package ru.stqa.javacourse.rest;
+package ru.stqa.javacourse.rest.tests;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
